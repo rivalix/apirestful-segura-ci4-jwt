@@ -1,12 +1,12 @@
 <?php
 
-function getJWTFromRequest($authencationHeader): string
+function getJWTFromRequest($authenticationHeader): string
 {
-    if(is_null($authencationHeader)) {
+    if(is_null($authenticationHeader)) {
         throw new Exception('Missing or invalid JWT in request');
     }
 
-    return explode(' ', $authencationHeader)[1];
+    return explode(' ', $authenticationHeader)[1];
 }
 
 function validateJWTFromRequest(string $encodedToken)
@@ -17,7 +17,7 @@ function validateJWTFromRequest(string $encodedToken)
     $userModel->findUserByEmailAddress($decodedToken->email);
 }
 
-function getSignedJWTForUser(string $email)
+function getSignedJWTForUser(string $email): string
 {
     $issuedAtTime = time();
     $tokenTimeToLive = getenv('JWT_TIME_TO_LIVE');
