@@ -1,8 +1,12 @@
 <?php
 
+use Config\Services;
+use Firebase\JWT\JWT;
+use App\Models\UserModel;
+
 function getJWTFromRequest($authenticationHeader): string
 {
-    if(is_null($authenticationHeader)) {
+    if (is_null($authenticationHeader)) {
         throw new Exception('Missing or invalid JWT in request');
     }
 
@@ -11,9 +15,9 @@ function getJWTFromRequest($authenticationHeader): string
 
 function validateJWTFromRequest(string $encodedToken)
 {
-    $key = \Config\Services::getSecretKey();
-    $decodedToken = \Firebase\JWT\JWT::decode($encodedToken, $key, ['HS256']);
-    $userModel = new \App\Models\UserModel();
+    $key = Services::getSecretKey();
+    $decodedToken = JWT::decode($encodedToken, $key, ['HS256']);
+    $userModel = new UserModel();
     $userModel->findUserByEmailAddress($decodedToken->email);
 }
 
@@ -28,7 +32,7 @@ function getSignedJWTForUser(string $email): string
         'exp' => $tokenExpiration
     ];
 
-    $jwt = \Firebase\JWT\JWT::encode($payload, \Config\Services::getSecretKey());
+    $jwt = JWT::encode($payload, Services::getSecretKey());
 
     return $jwt;
 }
