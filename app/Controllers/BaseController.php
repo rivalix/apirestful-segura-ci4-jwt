@@ -73,7 +73,7 @@ class BaseController extends Controller
 
     public function validateRequest($input, array $rules, array $messages = [])
     {
-        $this->validator = Services::validation()->setRule($rules);
+        $this->validator = Services::validation()->setRules($rules);
         if (is_string($rules)) {
             $validation = config('Validation');
 
@@ -89,6 +89,6 @@ class BaseController extends Controller
             $rules = $validation->$rules;
         }
 
-        return $this->validator->setRule($rules, $messages)->run($input);
+        return $this->validator->setRules($rules, $messages)->run($input);
     }
 }
