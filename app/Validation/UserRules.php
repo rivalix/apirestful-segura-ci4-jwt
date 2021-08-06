@@ -6,7 +6,7 @@ use App\Models\UserModel;
 
 class UserRules
 {
-	public function validateUser(string $str, string $fields, array $data): bool
+    public function validateUser(string $str, string $fields, array $data): bool
     {
         try {
             $model = new UserModel();
