@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Exception;
 use App\Models\ClientModel;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -11,12 +12,10 @@ class Client extends BaseController
     public function index()
     {
         $model = new ClientModel();
-        return $this->getResponse(
-            [
-                'message' => 'Clients retrieved successfully',
-                'clients' => $model->findAll()
-            ]
-        );
+        return $this->getResponse([
+            'message' => 'Clients retrieved successfully',
+            'clients' => $model->findAll()
+        ]);
     }
 
     public function store()
